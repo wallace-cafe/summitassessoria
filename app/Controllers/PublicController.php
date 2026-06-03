@@ -16,6 +16,15 @@ class PublicController extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
+        // Landing pages desativadas não abrem publicamente: o visitante é levado
+        // para a home. Admins logados ainda conseguem ver no preview do editor.
+        if (empty($page['active'])) {
+            $isPreview = $this->request->getGet('preview') === '1';
+            if (! ($isPreview && session('isLoggedIn'))) {
+                return redirect()->to('/');
+            }
+        }
+
         $filePath = WRITEPATH . ($page['file_path'] ?? '') . '/index.html';
 
         if (! is_file($filePath)) {
@@ -208,6 +217,11 @@ class PublicController extends BaseController
 
         if (! $page) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+        // Página desativada não captura leads.
+        if (empty($page['active'])) {
+            return redirect()->to('/');
         }
 
         $rules = [

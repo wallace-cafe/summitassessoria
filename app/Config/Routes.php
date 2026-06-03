@@ -24,6 +24,8 @@ $routes->post('landing-pages', 'LandingPagesController::store');
 $routes->get('landing-pages/edit/(:num)', 'LandingPagesController::edit/$1');
 $routes->post('landing-pages/update/(:num)', 'LandingPagesController::update/$1');
 $routes->get('landing-pages/delete/(:num)', 'LandingPagesController::delete/$1');
+$routes->post('landing-pages/deactivate/(:num)', 'LandingPagesController::deactivate/$1');
+$routes->post('landing-pages/activate/(:num)', 'LandingPagesController::activate/$1');
 
 $routes->get('leads', 'LeadsController::index');
 $routes->post('leads/archive/(:num)', 'LeadsController::archive/$1');

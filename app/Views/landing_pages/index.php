@@ -35,8 +35,22 @@
                         <td><a href="/p/<?= esc($page['slug']) ?>" target="_blank">/p/<?= esc($page['slug']) ?></a></td>
                         <td><?= esc(date('d/m/Y H:i', strtotime($page['created_at']))) ?></td>
                         <td>
-                            <a href="/landing-pages/edit/<?= $page['id'] ?>" class="btn btn-sm btn-primary">Editar</a>
-                            <a href="/landing-pages/delete/<?= $page['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza?')">Excluir</a>
+                            <div class="row-actions" style="justify-content: flex-start;">
+                                <a href="/landing-pages/edit/<?= $page['id'] ?>" class="btn btn-sm btn-primary">Editar</a>
+                                <?php if (! empty($page['active'])): ?>
+                                    <form action="/landing-pages/deactivate/<?= $page['id'] ?>" method="post"
+                                          onsubmit="return confirm('Desativar esta landing page? Ela deixará de abrir publicamente.');">
+                                        <?= csrf_field() ?>
+                                        <button type="submit" class="btn btn-sm btn-danger">Desativar</button>
+                                    </form>
+                                <?php else: ?>
+                                    <form action="/landing-pages/activate/<?= $page['id'] ?>" method="post"
+                                          onsubmit="return confirm('Ativar esta landing page novamente?');">
+                                        <?= csrf_field() ?>
+                                        <button type="submit" class="btn btn-sm btn-success">Ativar</button>
+                                    </form>
+                                <?php endif; ?>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>

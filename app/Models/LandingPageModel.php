@@ -10,7 +10,7 @@ class LandingPageModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $allowedFields    = ['title', 'slug', 'file_path', 'gtm_id'];
+    protected $allowedFields    = ['title', 'slug', 'file_path', 'gtm_id', 'active'];
     protected $useTimestamps    = true;
     protected $dateFormat       = 'datetime';
     protected $createdField     = 'created_at';

@@ -365,6 +365,16 @@ textarea.form-control {
     color: var(--text-primary);
 }
 
+.btn-success {
+    background-color: var(--success);
+    color: var(--canvas-dark);
+}
+
+.btn-success:hover {
+    background-color: #0bb673;
+    text-decoration: none;
+}
+
 .btn-secondary:hover {
     background-color: #3a414b;
     text-decoration: none;
@@ -375,7 +385,8 @@ textarea.form-control {
     display: flex;
     gap: 0.5rem;
     justify-content: flex-end;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    white-space: nowrap;
 }
 
 .row-actions form {

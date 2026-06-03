@@ -322,7 +322,9 @@ class LandingPagesController extends BaseController
             'gtm_id' => $gtmId ?: null,
         ]);
 
-        return redirect()->to('/landing-pages')->with('message', 'Landing page updated successfully.');
+        // Após salvar, recarrega a própria página de edição (com o conteúdo já
+        // atualizado), em vez de voltar para a lista de landing pages.
+        return redirect()->to('/landing-pages/edit/' . $id)->with('message', 'Landing page updated successfully.');
     }
 
     public function delete($id)
@@ -343,6 +345,29 @@ class LandingPagesController extends BaseController
         $model->delete($id);
 
         return redirect()->to('/landing-pages')->with('message', 'Landing page deleted successfully.');
+    }
+
+    public function deactivate($id)
+    {
+        return $this->setActive($id, 0, 'Landing page desativada.');
+    }
+
+    public function activate($id)
+    {
+        return $this->setActive($id, 1, 'Landing page ativada.');
+    }
+
+    private function setActive($id, int $active, string $message)
+    {
+        $model = new LandingPageModel();
+
+        if (! $model->find((int) $id)) {
+            return redirect()->to('/landing-pages')->with('message', 'Landing page não encontrada.');
+        }
+
+        $model->update((int) $id, ['active' => $active]);
+
+        return redirect()->to('/landing-pages')->with('message', $message);
     }
 
     private function removeDirectory(string $dir): int
