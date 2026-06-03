@@ -52,7 +52,23 @@ $orderToggle = ($order ?? 'DESC') === 'DESC' ? 'ASC' : 'DESC';
                     <tr>
                         <td><?= esc($lead['name']) ?></td>
                         <td><?= esc($lead['email']) ?></td>
-                        <td><?= esc($lead['phone'] ?? '—') ?></td>
+                        <td>
+                            <?php if (! empty($lead['phone'])):
+                                // Normaliza para o formato do wa.me (só dígitos). Se vier sem
+                                // o código do país (até 11 dígitos = DDD + número no Brasil),
+                                // adiciona o 55.
+                                $waDigits = preg_replace('/\D+/', '', $lead['phone']);
+                                if (strlen($waDigits) <= 11) {
+                                    $waDigits = '55' . $waDigits;
+                                }
+                            ?>
+                                <a href="https://wa.me/<?= esc($waDigits, 'attr') ?>" target="_blank" rel="noopener" class="wa-link" title="Abrir conversa no WhatsApp">
+                                    <i class="bx bxl-whatsapp"></i> <?= esc($lead['phone']) ?>
+                                </a>
+                            <?php else: ?>
+                                —
+                            <?php endif; ?>
+                        </td>
                         <td><?= esc($lead['landing_page_slug']) ?></td>
                         <td><?= esc($lead['status']) ?></td>
                         <td><?= esc(date('d/m/Y H:i', strtotime($lead['created_at']))) ?></td>

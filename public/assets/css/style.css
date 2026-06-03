@@ -396,6 +396,20 @@ textarea.form-control {
     margin: 0;
 }
 
+/* WhatsApp link (leads phone column) */
+.wa-link {
+    color: var(--success);
+    white-space: nowrap;
+}
+
+.wa-link:hover {
+    color: #0bb673;
+}
+
+.wa-link i {
+    vertical-align: middle;
+}
+
 /* Modal with blurred backdrop */
 .modal-overlay {
     position: fixed;
