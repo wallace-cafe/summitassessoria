@@ -64,6 +64,12 @@ Vagrantfile
 !/writable/debugbar/index.html
 
 #-------------------------
+# SQLite Database (runtime data — keep the folder, ignore the DB files)
+#-------------------------
+/writable/database/*
+!/writable/database/index.html
+
+#-------------------------
 # Generated Landing Pages
 #-------------------------
 # Uploaded/generated landing page files. Recreated on demand by the admin area
