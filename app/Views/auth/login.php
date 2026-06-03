@@ -4,7 +4,7 @@
 
 <?= $this->section('content') ?>
 <div class="auth-card">
-    <h1>LeadFlow</h1>
+    <img src="/assets/img/logotipo-summit.png" alt="Summit Assessoria" class="auth-logo">
 
     <?php if (session()->getFlashdata('error')): ?>
         <div class="alert alert-error">
@@ -12,7 +12,7 @@
         </div>
     <?php endif; ?>
 
-    <form action="/login" method="post">
+    <form action="/summit-admin" method="post">
         <?= csrf_field() ?>
         <div class="form-group">
             <label for="username">Usuário</label>

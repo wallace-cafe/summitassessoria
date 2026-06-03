@@ -63,6 +63,13 @@ Vagrantfile
 /writable/debugbar/*
 !/writable/debugbar/index.html
 
+#-------------------------
+# Generated Landing Pages
+#-------------------------
+# Uploaded/generated landing page files. Recreated on demand by the admin area
+# (LandingPagesController::store -> mkdir recursive), so they don't belong in git.
+/writable/landing_pages
+
 php_errors.log
 
 #-------------------------

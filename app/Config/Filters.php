@@ -77,13 +77,16 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
-            // 'honeypot',
-            // 'csrf',
-            // 'invalidchars',
+            // CSRF protection for every state-changing request, except the
+            // public landing-page lead capture and the token-authenticated API
+            // (which are not session/cookie based and carry no CSRF token).
+            'csrf' => ['except' => ['api/*', 'p/*']],
+            // Reject requests containing invalid/control characters.
+            'invalidchars',
         ],
         'after' => [
-            // 'honeypot',
-            // 'secureheaders',
+            // Adds X-Frame-Options, X-Content-Type-Options, Referrer-Policy, etc.
+            'secureheaders',
         ],
     ];
 
@@ -122,9 +125,18 @@ class Filters extends BaseFilters
                 'leads/*',
             ],
         ],
+        // Anti-bot honeypot on the login screen: an invisible field that real
+        // users never fill but naive bots do. The "after" pass injects the
+        // hidden field into the rendered form; the "before" pass rejects any
+        // submission where it was filled in.
+        'honeypot' => [
+            'before' => ['summit-admin'],
+            'after'  => ['summit-admin'],
+        ],
+        // Brute-force rate limiting on login attempts (see App\Filters\ThrottleFilter).
         'throttle' => [
             'before' => [
-                'login',
+                'summit-admin',
             ],
         ],
     ];

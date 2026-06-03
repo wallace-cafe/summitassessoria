@@ -157,9 +157,12 @@ class LandingPagesController extends BaseController
             }
         }
 
-        $gtmId = strip_tags($this->request->getPost('gtm_id'));
-        if ($gtmId !== null && $gtmId !== '') {
-            $gtmId = 'GTM-' . ltrim($gtmId, 'GTM-');
+        $gtmId = trim(strip_tags((string) $this->request->getPost('gtm_id')));
+        if ($gtmId !== '') {
+            // Strip a single leading "GTM-" the user may have typed (any case),
+            // then re-apply it, so the stored value is exactly "GTM-<id>" with
+            // the ID kept precisely as informed (no characters trimmed away).
+            $gtmId = 'GTM-' . preg_replace('/^GTM-/i', '', $gtmId);
         }
 
         $model = new LandingPageModel();
@@ -298,9 +301,12 @@ class LandingPagesController extends BaseController
             log_message('info', "[landing_page.updated slug={$page['slug']} blocks={$blockCount}]");
         }
 
-        $gtmId = strip_tags($this->request->getPost('gtm_id'));
-        if ($gtmId !== null && $gtmId !== '') {
-            $gtmId = 'GTM-' . ltrim($gtmId, 'GTM-');
+        $gtmId = trim(strip_tags((string) $this->request->getPost('gtm_id')));
+        if ($gtmId !== '') {
+            // Strip a single leading "GTM-" the user may have typed (any case),
+            // then re-apply it, so the stored value is exactly "GTM-<id>" with
+            // the ID kept precisely as informed (no characters trimmed away).
+            $gtmId = 'GTM-' . preg_replace('/^GTM-/i', '', $gtmId);
         }
 
         $model->update($id, [

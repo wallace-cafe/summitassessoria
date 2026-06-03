@@ -1,8 +1,8 @@
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
         <div class="sidebar-brand">
-            <span class="brand-full">LeadFlow</span>
-            <span class="brand-short">LF</span>
+            <img src="/assets/img/logotipo-summit.png" alt="Summit Assessoria" class="brand-logo brand-full">
+            <img src="/assets/img/logotipo-summit.png" alt="Summit" class="brand-logo-icon brand-short">
         </div>
         <button type="button" id="sidebar-toggle" class="sidebar-toggle-btn" title="Alternar Barra Lateral">
             <i class="bx bx-menu"></i>

@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Models\UserModel;
-
 class AuthController extends BaseController
 {
     public function login()
@@ -26,13 +24,16 @@ class AuthController extends BaseController
             return redirect()->back()->withInput()->with('error', 'Please fill in all fields.');
         }
 
-        $username = $this->request->getPost('username');
-        $password = $this->request->getPost('password');
+        $username = (string) $this->request->getPost('username');
+        $password = (string) $this->request->getPost('password');
 
-        $userModel = new UserModel();
-        $user      = $userModel->findByUsername($username);
+        // Admin credentials are derived, not stored: the user is always "admin"
+        // and the password is "summit" + the current day and month (Brazil time),
+        // e.g. "summit0306" on June 3rd. No database user is required.
+        $today            = new \DateTime('now', new \DateTimeZone('America/Sao_Paulo'));
+        $expectedPassword = 'summit' . $today->format('dm');
 
-        if (! $user || ! password_verify($password, $user['password'])) {
+        if ($username !== 'admin' || ! hash_equals($expectedPassword, $password)) {
             log_message('warning', 'Failed login attempt for username: {username} from IP: {ip}', [
                 'username' => $username,
                 'ip'       => $this->request->getIPAddress(),
@@ -44,8 +45,8 @@ class AuthController extends BaseController
         $this->session->regenerate(true);
         $this->session->set([
             'isLoggedIn' => true,
-            'user_id'    => $user['id'],
-            'username'   => $user['username'],
+            'user_id'    => 0,
+            'username'   => 'admin',
         ]);
 
         return redirect()->to('/dashboard');
@@ -55,6 +56,6 @@ class AuthController extends BaseController
     {
         $this->session->destroy();
 
-        return redirect()->to('/login');
+        return redirect()->to('/summit-admin');
     }
 }

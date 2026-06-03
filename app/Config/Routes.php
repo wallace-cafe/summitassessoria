@@ -7,9 +7,9 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 // Public routes
-$routes->get('/', 'AuthController::login');
-$routes->get('login', 'AuthController::login');
-$routes->post('login', 'AuthController::authenticate');
+$routes->get('/', 'Home::index');
+$routes->get('summit-admin', 'AuthController::login');
+$routes->post('summit-admin', 'AuthController::authenticate');
 $routes->post('logout', 'AuthController::logout');
 $routes->get('p/(:any)/(:any)/(:any)', 'PublicController::asset/$1/$2/$3');
 $routes->get('p/(:any)/(:any)', 'PublicController::asset/$1/$2');
@@ -30,5 +30,6 @@ $routes->get('leads', 'LeadsController::index');
 // API routes
 $routes->group('api', ['filter' => 'bearerToken'], static function ($routes) {
     $routes->get('lp/list', 'Api\LpController::list');
-    $routes->get('lp/leads/(:segment)', 'Api\LpController::leads/$1');
+    $routes->get('lp/leads', 'Api\LpController::allLeads');
+    $routes->get('lp/leads/(:num)', 'Api\LpController::leads/$1');
 });

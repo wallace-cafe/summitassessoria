@@ -57,6 +57,14 @@ a:hover {
     text-align: center;
 }
 
+.auth-logo {
+    display: block;
+    width: 200px;
+    max-width: 70%;
+    height: auto;
+    margin: 0 auto 1.5rem;
+}
+
 /* Dashboard layout */
 .dashboard-layout {
     display: flex;
@@ -103,6 +111,23 @@ a:hover {
 
 .brand-short {
     display: none;
+}
+
+/* Brand logo (replaces text wordmark) */
+.brand-logo {
+    display: block;
+    height: 84px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+/* Compact mark for the collapsed sidebar: crop to the mountain icon */
+.brand-logo-icon {
+    width: 48px;
+    height: 22px;
+    object-fit: cover;
+    object-position: center top;
 }
 
 .sidebar-toggle-btn {

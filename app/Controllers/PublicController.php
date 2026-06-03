@@ -25,9 +25,18 @@ class PublicController extends BaseController
 
         $html = file_get_contents($filePath);
 
-        // Replace GTM-XXXXXX with the actual GTM ID from the database
+        // Replace the GTM placeholder (e.g. GTM-XXXXXX or GTM-XXXXXXX) with the
+        // actual GTM ID. Match any run of X's so the whole placeholder is swapped
+        // out, leaving no leftover characters regardless of how many X's the
+        // template uses. A callback is used so the replacement is taken literally
+        // (no `$`/backreference interpretation in the GTM ID).
         if (! empty($page['gtm_id'])) {
-            $html = str_replace('GTM-XXXXXX', $page['gtm_id'], $html);
+            $gtmId = $page['gtm_id'];
+            $html  = preg_replace_callback(
+                '/GTM-X+/',
+                static fn (): string => $gtmId,
+                $html
+            );
         }
 
         $baseTag = '<base href="/p/' . $slug . '/">';
