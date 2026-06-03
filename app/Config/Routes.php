@@ -26,6 +26,7 @@ $routes->post('landing-pages/update/(:num)', 'LandingPagesController::update/$1'
 $routes->get('landing-pages/delete/(:num)', 'LandingPagesController::delete/$1');
 
 $routes->get('leads', 'LeadsController::index');
+$routes->post('leads/archive/(:num)', 'LeadsController::archive/$1');
 
 // API routes
 $routes->group('api', ['filter' => 'bearerToken'], static function ($routes) {

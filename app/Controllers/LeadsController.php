@@ -52,4 +52,21 @@ class LeadsController extends BaseController
 
         return view('leads/index', $data);
     }
+
+    public function archive($id)
+    {
+        $leadModel = new LeadModel();
+
+        // find() already excludes archived leads (soft delete), so this also
+        // guards against archiving the same lead twice.
+        if (! $leadModel->find((int) $id)) {
+            return redirect()->back()->with('message', 'Lead não encontrado.');
+        }
+
+        // Soft delete -> stamps archived_at; the lead leaves the list and the API
+        // but stays in the database.
+        $leadModel->delete((int) $id);
+
+        return redirect()->back()->with('message', 'Lead arquivado com sucesso.');
+    }
 }

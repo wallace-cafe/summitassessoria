@@ -6,7 +6,9 @@
 <?= $this->section('content') ?>
 <div class="top-bar">
     <h1>Landing Pages</h1>
-    <a href="/landing-pages/create" class="btn btn-primary">Criar Nova Página</a>
+    <?php if (session('can_create_pages')): ?>
+        <a href="/landing-pages/create" class="btn btn-primary">Criar Nova Página</a>
+    <?php endif; ?>
 </div>
 
 <?php if (session()->getFlashdata('message')): ?>

@@ -360,6 +360,86 @@ textarea.form-control {
     font-size: 0.875rem;
 }
 
+.btn-secondary {
+    background-color: var(--hairline-on-dark);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background-color: #3a414b;
+    text-decoration: none;
+}
+
+/* Row action buttons (leads table) */
+.row-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.row-actions form {
+    margin: 0;
+}
+
+/* Modal with blurred backdrop */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.modal-overlay[hidden] {
+    display: none;
+}
+
+.modal-box {
+    background-color: var(--surface-card-dark);
+    border: 1px solid var(--hairline-on-dark);
+    border-radius: 8px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 520px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.modal-title {
+    margin-bottom: 0.25rem;
+}
+
+.modal-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.modal-body {
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--canvas-dark);
+    border: 1px solid var(--hairline-on-dark);
+    border-radius: 6px;
+    padding: 1rem;
+    min-height: 60px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+}
+
 /* Alerts */
 .alert {
     padding: 1rem;

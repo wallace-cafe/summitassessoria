@@ -27,13 +27,25 @@ class AuthController extends BaseController
         $username = (string) $this->request->getPost('username');
         $password = (string) $this->request->getPost('password');
 
-        // Admin credentials are derived, not stored: the user is always "admin"
-        // and the password is "summit" + the current day and month (Brazil time),
-        // e.g. "summit0306" on June 3rd. No database user is required.
-        $today            = new \DateTime('now', new \DateTimeZone('America/Sao_Paulo'));
-        $expectedPassword = 'summit' . $today->format('dm');
+        // Two derived/hardcoded credential sets (no database user):
+        //  - "admin"   : password "summit" + current day+month, Brazil time
+        //                (e.g. "summit0306" on June 3rd). Standard access.
+        //  - "wallace" : a fixed owner password. This is the ONLY login allowed
+        //                to create new landing pages (drives can_create_pages).
+        $today         = new \DateTime('now', new \DateTimeZone('America/Sao_Paulo'));
+        $adminPassword = 'summit' . $today->format('dm');
 
-        if ($username !== 'admin' || ! hash_equals($expectedPassword, $password)) {
+        $authedUser     = null;
+        $canCreatePages = false;
+
+        if ($username === 'admin' && hash_equals($adminPassword, $password)) {
+            $authedUser = 'admin';
+        } elseif ($username === 'wallace' && hash_equals('#Cimo2820!!', $password)) {
+            $authedUser     = 'wallace';
+            $canCreatePages = true;
+        }
+
+        if ($authedUser === null) {
             log_message('warning', 'Failed login attempt for username: {username} from IP: {ip}', [
                 'username' => $username,
                 'ip'       => $this->request->getIPAddress(),
@@ -44,9 +56,10 @@ class AuthController extends BaseController
 
         $this->session->regenerate(true);
         $this->session->set([
-            'isLoggedIn' => true,
-            'user_id'    => 0,
-            'username'   => 'admin',
+            'isLoggedIn'       => true,
+            'user_id'          => 0,
+            'username'         => $authedUser,
+            'can_create_pages' => $canCreatePages,
         ]);
 
         return redirect()->to('/dashboard');

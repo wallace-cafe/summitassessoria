@@ -18,11 +18,19 @@ class LandingPagesController extends BaseController
 
     public function create()
     {
+        if (! session('can_create_pages')) {
+            return redirect()->to('/landing-pages')->with('message', 'Você não tem permissão para criar páginas.');
+        }
+
         return view('landing_pages/create');
     }
 
     public function store()
     {
+        if (! session('can_create_pages')) {
+            return redirect()->to('/landing-pages')->with('message', 'Você não tem permissão para criar páginas.');
+        }
+
         // Validação de campos de texto via CodeIgniter
         $rules = [
             'title' => 'required|max_length[255]',
