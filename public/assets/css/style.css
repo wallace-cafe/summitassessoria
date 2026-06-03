@@ -330,6 +330,8 @@ textarea.form-control {
     border-radius: 4px;
     font-size: 1rem;
     font-weight: 500;
+    line-height: 1.5;
+    font-family: inherit;
     cursor: pointer;
     text-decoration: none;
     transition: background-color 0.2s;
@@ -384,6 +386,7 @@ textarea.form-control {
 .row-actions {
     display: flex;
     gap: 0.5rem;
+    align-items: center;
     justify-content: flex-end;
     flex-wrap: nowrap;
     white-space: nowrap;
